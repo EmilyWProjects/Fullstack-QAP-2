@@ -46,7 +46,27 @@ app.post("/quiz", (req, res) => {
   }
 });
 
+
+//Completion
+app.get("/completion", (req, res) => {
+  res.render("completion", { lastStreak });
+});
+
+
+//Leaderboard
+app.get("/leaderboards", (req, res) => {
+  const getTopLeaderboard = (data, limit) => {
+    return data
+      .sort((a, b) => b.streak - a.streak)
+      .slice(0, limit);
+  };
+
+  const topLeaderboard = getTopLeaderboard(leaderboard, 10);
+  res.render("leaderboards", { topLeaderboard });
+});
+
+
 // Start the server
 app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+  console.log(`Server running at http://localhost:3000`);
 });
